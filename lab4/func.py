@@ -18,6 +18,14 @@ def b(x, y):
         b = math.log(f(x)) + (f(x) ** 2 + y) ** 3 
     return b
 
+def g(x, b):
+    xb = x*b
+    if 0.5 < xb < 10:
+        return math.exp(f(x) - abs(b))
+    elif 0.1 < xb < 0.5:
+        return abs(f(x) + b) ** 0.5
+    else:
+        return 2 * f(x) * f(x)
 
 if __name__ == '__main__':
     xs = np.linspace(0, 2, 100)
