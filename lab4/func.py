@@ -28,14 +28,20 @@ def g(x, b):
         return 2 * f(x) * f(x)
 
 if __name__ == '__main__':
-    xs = np.linspace(0, 2, 100)
-    y = []
+    xs = np.linspace(0, 2, 100000)
+    y1 = []
+    y2 = []
     for x in xs:
-        y.append(b(x, 2))
+        y1.append(b(x, 2))
+        y2.append(g(x, 2))
 
-    fig, ax = plt.subplots()
+    fig, ax1 = plt.subplots(dpi=400)
 
-    ax.scatter(xs, y)
+    ax1.scatter(xs, y1, s=1)
+    
+    ax2 = ax1.twinx()
+
+    ax2.scatter(xs, y2, color="red", s=1)
 
     fig.savefig("plots/func.png", bbox_inches='tight')
     fig.savefig("plots/func.pdf", bbox_inches='tight')
