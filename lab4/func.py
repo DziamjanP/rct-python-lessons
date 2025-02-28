@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 #this isn't finished
 
 def f(x):
     return x*x
 
-def g(x, y):
+def b(x, y):
     
     if y == 0:
         b = 0
@@ -19,8 +20,12 @@ def g(x, y):
 
 
 if __name__ == '__main__':
-    plt.scatter(x, y)
-    plt.title("Funciton")
+    xs = np.linspace(0, 2, 100)
+    y = []
+    for x in xs:
+        y.append(b(x, 2))
+    plt.scatter(xs, y)
+    plt.title("Funcitons")
 
     plt.savefig("plots/func.png", bbox_inches='tight')
     plt.savefig("plots/func.pdf", bbox_inches='tight')
