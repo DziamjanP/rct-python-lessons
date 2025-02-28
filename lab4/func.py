@@ -24,8 +24,10 @@ if __name__ == '__main__':
     y = []
     for x in xs:
         y.append(b(x, 2))
-    plt.scatter(xs, y)
-    plt.title("Funcitons")
 
-    plt.savefig("plots/func.png", bbox_inches='tight')
-    plt.savefig("plots/func.pdf", bbox_inches='tight')
+    fig, ax = plt.subplots()
+
+    ax.scatter(xs, y)
+
+    fig.savefig("plots/func.png", bbox_inches='tight')
+    fig.savefig("plots/func.pdf", bbox_inches='tight')
