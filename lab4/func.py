@@ -37,11 +37,16 @@ if __name__ == '__main__':
 
     fig, ax1 = plt.subplots(dpi=400)
 
-    ax1.scatter(xs, y1, s=1)
+    ax1.set_xlabel("x")
+    ax1.scatter(xs, y1, s=1, label="g(x, b=2)")
+    ax1.set_ylabel("g(x, b=2)", color="C0")
     
     ax2 = ax1.twinx()
+    ax2.set_ylabel("b(x, y=2)", color="red")
 
-    ax2.scatter(xs, y2, color="red", s=1)
+    ax2.scatter(xs, y2, color="red", s=1, label="b(x, y=2)")
+
+    fig.legend()
 
     fig.savefig("plots/func.png", bbox_inches='tight')
     fig.savefig("plots/func.pdf", bbox_inches='tight')
