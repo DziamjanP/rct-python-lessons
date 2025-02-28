@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 #this isn't finished
 
 def f(x):
     return x*x
 
-def g(x, y):
+def b(x, y):
     
     if y == 0:
         b = 0
@@ -17,10 +18,35 @@ def g(x, y):
         b = math.log(f(x)) + (f(x) ** 2 + y) ** 3 
     return b
 
+def g(x, b):
+    xb = x*b
+    if 0.5 < xb < 10:
+        return math.exp(f(x) - abs(b))
+    elif 0.1 < xb < 0.5:
+        return abs(f(x) + b) ** 0.5
+    else:
+        return 2 * f(x) * f(x)
 
 if __name__ == '__main__':
-    plt.scatter(x, y)
-    plt.title("Funciton")
+    xs = np.linspace(0, 2, 100000)
+    y1 = []
+    y2 = []
+    for x in xs:
+        y1.append(b(x, 2))
+        y2.append(g(x, 2))
 
-    plt.savefig("plots/func.png", bbox_inches='tight')
-    plt.savefig("plots/func.pdf", bbox_inches='tight')
+    fig, ax1 = plt.subplots(dpi=400)
+
+    ax1.set_xlabel("x")
+    ax1.scatter(xs, y1, s=1, label="g(x, b=2)")
+    ax1.set_ylabel("g(x, b=2)", color="C0")
+    
+    ax2 = ax1.twinx()
+    ax2.set_ylabel("b(x, y=2)", color="red")
+
+    ax2.scatter(xs, y2, color="red", s=1, label="b(x, y=2)")
+
+    fig.legend()
+
+    fig.savefig("plots/func.png", bbox_inches='tight')
+    fig.savefig("plots/func.pdf", bbox_inches='tight')
