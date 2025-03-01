@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from task import Task
+from task import Task, TaskModel
 
 class DBHandler:
     def __init__(self):
@@ -9,10 +9,19 @@ class DBHandler:
         # Create a session factory using the engine
         self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     
-    def get_tasks(self):
+    def get_tasks(self, id = None, completed = None, limit = None):
         db = self.SessionLocal()
-        tasks = db.query(Task).all()
+        res = db.query(Task)
+        if (id != None):
+            res = res.filter(Task.id == id)
+        if (completed != None):
+            res = res.filter(Task.completed == completed)
+        if (limit != None):
+            res = res.limit(limit)
         db.close()
+        tasks = []
+        for task in res:
+            tasks.append(TaskModel.model_validate(task))
         return tasks
 
     def add_task(self, task):
