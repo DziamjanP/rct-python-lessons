@@ -1,4 +1,5 @@
 from typing import Optional
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import String, DateTime
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
@@ -20,4 +21,11 @@ class Task(Base):
     def __repr__(self) -> str:
         return f"Task(id={self.id!r}, title={self.title!r}, description={self.description!r}, completed={self.completed!r}, deadline={self.deadline!r})"
 
-    
+class TaskModel(BaseModel):
+    id: int
+    title: str = Field(max_length=256)
+    description: Optional[str]
+    completed: bool
+    deadline: Optional[datetime.datetime]
+
+    model_config = ConfigDict(from_attributes=True)
