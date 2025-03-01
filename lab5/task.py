@@ -22,10 +22,10 @@ class Task(Base):
         return f"Task(id={self.id!r}, title={self.title!r}, description={self.description!r}, completed={self.completed!r}, deadline={self.deadline!r})"
 
 class TaskModel(BaseModel):
-    id: int
+    id: int | None = None
     title: str = Field(max_length=256)
-    description: Optional[str]
-    completed: bool
-    deadline: Optional[datetime.datetime]
+    description: str | None = None
+    completed: bool = False
+    deadline: datetime.datetime | None = None
 
     model_config = ConfigDict(from_attributes=True)
