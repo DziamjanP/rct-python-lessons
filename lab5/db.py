@@ -43,3 +43,10 @@ class DBHandler:
             db_task.deadline = info.deadline
         db.commit()
         db.close()
+    
+    def delete_task(self, task_id):
+        db = self.SessionLocal()
+        db_task = db.query(Task).filter(Task.id == task_id).first()
+        db.delete(db_task)
+        db.commit()
+        db.close()

@@ -23,10 +23,11 @@ def add_task(task: TaskModel):
     return {'code':0}
 
 @app.put('/tasks/{task_id}')
-def update_task(task: TaskModelUpdate, task_id: int = Path(title = "ID of the task", gt = 0)):
+def update_task(task: TaskModelUpdate, task_id: int = Path(title = "Task's ID", description="Task will be identified using this id.", gt = 0)):
     db.update_task(task_id, task)
     return {'code':0}
 
-@app.delete('/tasks')
-def delete_task():
+@app.delete('/tasks/{task_id}')
+def delete_task(task_id: int = Path(title="Task's ID", description="Task will be identified using this id.", gt = 0)):
+    db.delete_task(task_id)
     return {'code':0}
