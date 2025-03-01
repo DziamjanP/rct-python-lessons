@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from task import Task, TaskModel, TaskModelUpdate
@@ -22,6 +23,8 @@ class DBHandler:
         tasks = []
         for task in res:
             tasks.append(TaskModel.model_validate(task))
+        if len(tasks) == 0:
+            raise HTTPException(status_code=404, detail=f"No tasks matching the query found")
         return tasks
 
     def add_task(self, task):
@@ -33,6 +36,8 @@ class DBHandler:
     def update_task(self, task_id, info: TaskModelUpdate):
         db = self.SessionLocal()
         db_task = db.query(Task).filter(Task.id == task_id).first()
+        if (db_task == None):
+            raise HTTPException(status_code=404, detail=f"Task with id {task_id} doesn't exist")
         if (info.title != None):
             db_task.title = info.title
         if (info.description != None):
@@ -47,6 +52,8 @@ class DBHandler:
     def delete_task(self, task_id):
         db = self.SessionLocal()
         db_task = db.query(Task).filter(Task.id == task_id).first()
+        if (db_task == None):
+            raise HTTPException(status_code=404, detail=f"Task with id {task_id} doesn't exist")
         db.delete(db_task)
         db.commit()
         db.close()
