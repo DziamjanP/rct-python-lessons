@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Path, Query
 
 from db import DBHandler
-from task import Task, TaskModel
+from task import Task, TaskModel, TaskModelUpdate
 
 app = FastAPI()
 
@@ -22,9 +22,9 @@ def add_task(task: TaskModel):
     db.add_task(Task(title=task.title, completed = task.completed, description = task.description, deadline = task.deadline))
     return {'code':0}
 
-@app.put('/tasks')
-def update_task():
-    #update task
+@app.put('/tasks/{task_id}')
+def update_task(task: TaskModelUpdate, task_id: int = Path(title = "ID of the task", gt = 0)):
+    db.update_task(task_id, task)
     return {'code':0}
 
 @app.delete('/tasks')

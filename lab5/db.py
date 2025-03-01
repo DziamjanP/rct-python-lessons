@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from task import Task, TaskModel
+from task import Task, TaskModel, TaskModelUpdate
 
 class DBHandler:
     def __init__(self):
@@ -27,5 +27,19 @@ class DBHandler:
     def add_task(self, task):
         db = self.SessionLocal()
         db.add(task)
+        db.commit()
+        db.close()
+
+    def update_task(self, task_id, info: TaskModelUpdate):
+        db = self.SessionLocal()
+        db_task = db.query(Task).filter(Task.id == task_id).first()
+        if (info.title != None):
+            db_task.title = info.title
+        if (info.description != None):
+            db_task.description = info.description
+        if (info.completed != None):
+            db_task.completed = info.completed
+        if (info.deadline != None):
+            db_task.deadline = info.deadline
         db.commit()
         db.close()

@@ -29,3 +29,6 @@ class TaskModel(BaseModel):
     deadline: datetime.datetime | None = None
 
     model_config = ConfigDict(from_attributes=True)
+
+class TaskModelUpdate(TaskModel):
+    title: str | None = Field(max_length=256, default=None)
