@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path, Query
+from fastapi import BackgroundTasks, FastAPI, Path, Query
 
 from db import DBHandler
 from task import Task, TaskModel, TaskModelUpdate
@@ -6,6 +6,9 @@ from task import Task, TaskModel, TaskModelUpdate
 app = FastAPI()
 
 db = DBHandler()
+
+def send_notification(message):
+    print("Sent notification", message, "to some email.")
 
 @app.get('/')
 def index():
@@ -18,8 +21,9 @@ def get_tasks(id: int = Query(None), completed: bool = Query(None), limit: int =
     return {'tasks':tasks}
 
 @app.post('/tasks')
-def add_task(task: TaskModel):
+def add_task(task: TaskModel, background_tasks: BackgroundTasks):
     db.add_task(Task(title=task.title, completed = task.completed, description = task.description, deadline = task.deadline))
+    background_tasks.add_task(send_notification, f"You have a new task {task.title} due at {task.deadline}")
     return {'code':0}
 
 @app.put('/tasks/{task_id}')
