@@ -13,7 +13,7 @@ conn.close()
 conn = psycopg2.connect("host=localhost dbname=rct_todo user=postgres password=postgres")
 cur = conn.cursor()
 
-cur.execute("CREATE TABLE tasks (id SERIAL PRIMARY KEY, title VARCHAR(256), description TEXT, completed BOOLEAN, deadline TIMESTAMP)")
+cur.execute("CREATE TABLE tasks (id SERIAL PRIMARY KEY, title VARCHAR(256) NOT NULL, description TEXT, completed BOOLEAN, deadline TIMESTAMP)")
 
 conn.commit()
 
