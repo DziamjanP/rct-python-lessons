@@ -27,7 +27,7 @@ def g(x, b):
     else:
         return 2 * f(x) * f(x)
 
-if __name__ == '__main__':
+def get_plot():
     xs = np.linspace(0, 2, 100000)
     y1 = []
     y2 = []
@@ -48,5 +48,4 @@ if __name__ == '__main__':
 
     fig.legend()
 
-    fig.savefig("plots/func.png", bbox_inches='tight')
-    fig.savefig("plots/func.pdf", bbox_inches='tight')
+    return fig
