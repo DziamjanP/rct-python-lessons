@@ -11,10 +11,6 @@ db = DBHandler()
 def send_notification(message):
     print("Sent notification", message, "to some email.")
 
-@app.get('/')
-def index():
-    return {"hey":"test"}
-
 @app.get('/tasks', description="Lists task(s) by specified query.")
 def get_tasks(
         id: int = Query(None, title="Task's ID", description="Get only the task matching this id. Omit to return all.", gt=0),
