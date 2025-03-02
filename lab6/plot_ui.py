@@ -5,6 +5,7 @@ import streamlit as st
 
 import plots.func as func_plot
 import plots.bars as bar_plot
+import plots.heatmap as heatmap
 
 st.title("Plots of 4'th task")
 
@@ -20,5 +21,11 @@ with tab1:
     st.pyplot(func_plot.get_plot(plot_range[0], plot_range[1], var_b=b, var_y=y))
 
 with tab2:
-    st.header("BARBARBA")
+    st.header("Horizontal bar chart")
     st.pyplot(bar_plot.get_plot())
+
+with tab3:
+    st.header("Random heatmap")
+    size_x = st.slider("Horizontal size", 1, 20, 10)
+    size_y = st.slider("Vertical size", 1, 20, 10)
+    st.pyplot(heatmap.get_plot(size_x, size_y))
