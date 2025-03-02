@@ -31,7 +31,9 @@ class DBHandler:
         db = self.SessionLocal()
         db.add(task)
         db.commit()
+        task_id = task.id
         db.close()
+        return task_id
 
     def update_task(self, task_id, info: TaskModelUpdate):
         db = self.SessionLocal()

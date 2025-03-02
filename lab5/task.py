@@ -22,7 +22,7 @@ class Task(Base):
         return f"Task(id={self.id!r}, title={self.title!r}, description={self.description!r}, completed={self.completed!r}, deadline={self.deadline!r})"
 
 class TaskModel(BaseModel):
-    id: int | None = None
+    id: int | None = Field(None, description="ID is ignored when performing task addition")
     title: str = Field(max_length=256)
     description: str | None = None
     completed: bool = False

@@ -26,9 +26,9 @@ def get_tasks(
 
 @app.post('/tasks', description="Adds new task to the database.")
 def add_task(task: TaskModel, background_tasks: BackgroundTasks) -> TaskActionResponse:
-    db.add_task(Task(title=task.title, completed = task.completed, description = task.description, deadline = task.deadline))
+    task_id = db.add_task(Task(title=task.title, completed = task.completed, description = task.description, deadline = task.deadline))
     background_tasks.add_task(send_notification, f"You have a new task {task.title} due at {task.deadline}")
-    return TaskActionResponse.make_success()
+    return TaskActionResponse(code=0, msg=str(task_id))
 
 @app.put('/tasks/{task_id}', description="Updates task by task_id. Updates only fields specified in request body.")
 def update_task(task: TaskModelUpdate, task_id: int = Path(title = "Task's ID", description="Task will be identified using this id.", gt = 0)) -> TaskActionResponse:
