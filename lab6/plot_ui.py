@@ -7,6 +7,7 @@ import plots.func as func_plot
 import plots.bars as bar_plot
 import plots.heatmap as heatmap
 import plots.pie as pie_chart
+import plots.scatter as scatter_plot
 
 st.title("Plots of 4'th task")
 
@@ -34,3 +35,19 @@ with tab3:
 with tab4:
     st.header("Pie chart of fruit favors of some users")
     st.pyplot(pie_chart.get_plot())
+
+with tab5:
+    st.header("Scatter plot of 3 random clusters")
+    st.text("Cluster sizes and positions can be adjusted with sliders.")
+    cluster_size = st.slider("Cluster size", 1, 500, 50)
+    cluster_sigm = st.slider("Sigma value of cluster", 0.0, 5.0, 0.4)
+    st.text("Position of red cluster:")
+    ax = st.number_input("Red cluster x", value=1)
+    ay = st.number_input("Red cluster y", value=1)
+    st.text("Position of green cluster:")
+    bx = st.number_input("Green cluster x", value=5)
+    by = st.number_input("Green cluster y", value=2)
+    st.text("Position of blue cluster:")
+    cx = st.number_input("Blue cluster x", value=3)
+    cy = st.number_input("Blue cluster y", value=4)
+    st.pyplot(scatter_plot.get_plot(positiona=(ax, ay), positionb=(bx, by), positionc=(cx, cy), cluster_size=cluster_size, cluster_sigma=cluster_sigm))
