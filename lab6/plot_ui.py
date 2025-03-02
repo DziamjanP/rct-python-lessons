@@ -8,6 +8,7 @@ import plots.bars as bar_plot
 import plots.heatmap as heatmap
 import plots.pie as pie_chart
 import plots.scatter as scatter_plot
+import plots.plot_3d as plot_3d
 
 st.title("Plots of 4'th task")
 
@@ -51,3 +52,10 @@ with tab5:
     cx = st.number_input("Blue cluster x", value=3)
     cy = st.number_input("Blue cluster y", value=4)
     st.pyplot(scatter_plot.get_plot(positiona=(ax, ay), positionb=(bx, by), positionc=(cx, cy), cluster_size=cluster_size, cluster_sigma=cluster_sigm))
+
+with tab6:
+    st.header("3-dimensional plot of function:")
+    st.latex("z=sin(\\sqrt{x^2+y^2})")
+    x_range = st.slider("Select plot's X range", -10.0, 10.0, (-5.0, 5.0))
+    y_range = st.slider("Select plot's Y range", -10.0, 10.0, (-5.0, 5.0))
+    st.pyplot(plot_3d.get_plot(x_range[0], x_range[1], y_range[0], y_range[1]))
