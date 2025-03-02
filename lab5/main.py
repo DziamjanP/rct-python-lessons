@@ -17,9 +17,10 @@ def index():
 
 @app.get('/tasks', description="Lists task(s) by specified query.")
 def get_tasks(
-    id: int = Query(None, title="Task's ID", description="Get only the task matching this id. Omit to return all.", gt=0),
-    completed: bool = Query(None, title="Completed field", description="Will return only completed or incompleted tasks. Omit to return both."),
-    limit: int = Query(None, title="Limit by", description="Limits amount of returned tasks by specified amount. Omit to return all matching tasks.", gt=0)) -> TasksResponse:
+        id: int = Query(None, title="Task's ID", description="Get only the task matching this id. Omit to return all.", gt=0),
+        completed: bool = Query(None, title="Completed field", description="Will return only completed or incompleted tasks. Omit to return both."),
+        limit: int = Query(None, title="Limit by", description="Limits amount of returned tasks by specified amount. Omit to return all matching tasks.", gt=0)
+    ) -> TasksResponse:
     tasks = db.get_tasks(id = id, completed = completed, limit = limit)
     return {'tasks':tasks}
 
