@@ -6,7 +6,7 @@ from task import Task, TaskModel, TaskModelUpdate
 class DBHandler:
     def __init__(self):
         database_url = "postgresql://postgres:postgres@localhost/rct_todo"
-        engine = create_engine(database_url)
+        engine = create_engine(database_url, pool_size=20, max_overflow=40)
         # Create a session factory using the engine
         self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     

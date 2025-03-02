@@ -27,26 +27,25 @@ def g(x, b):
     else:
         return 2 * f(x) * f(x)
 
-if __name__ == '__main__':
-    xs = np.linspace(0, 2, 100000)
+def get_plot(start_x, end_x, var_b = 2, var_y = 2):
+    xs = np.linspace(start_x, end_x, 100000)
     y1 = []
     y2 = []
     for x in xs:
-        y1.append(b(x, 2))
-        y2.append(g(x, 2))
+        y1.append(b(x, var_y))
+        y2.append(g(x, var_b))
 
     fig, ax1 = plt.subplots(dpi=400)
 
     ax1.set_xlabel("x")
-    ax1.scatter(xs, y1, s=1, label="g(x, b=2)")
-    ax1.set_ylabel("g(x, b=2)", color="C0")
+    ax1.scatter(xs, y1, s=1, label=f"g(x, b={var_b})")
+    ax1.set_ylabel(f"g(x, b={var_b})", color="C0")
     
     ax2 = ax1.twinx()
-    ax2.set_ylabel("b(x, y=2)", color="red")
+    ax2.set_ylabel(f"b(x, y={var_y})", color="red")
 
-    ax2.scatter(xs, y2, color="red", s=1, label="b(x, y=2)")
+    ax2.scatter(xs, y2, color="red", s=1, label=f"b(x, y={var_y})")
 
     fig.legend()
 
-    fig.savefig("plots/func.png", bbox_inches='tight')
-    fig.savefig("plots/func.pdf", bbox_inches='tight')
+    return fig
