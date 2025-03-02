@@ -6,6 +6,7 @@ import streamlit as st
 import plots.func as func_plot
 import plots.bars as bar_plot
 import plots.heatmap as heatmap
+import plots.pie as pie_chart
 
 st.title("Plots of 4'th task")
 
@@ -29,3 +30,7 @@ with tab3:
     size_x = st.slider("Horizontal size", 1, 20, 10)
     size_y = st.slider("Vertical size", 1, 20, 10)
     st.pyplot(heatmap.get_plot(size_x, size_y))
+
+with tab4:
+    st.header("Pie chart of fruit favors of some users")
+    st.pyplot(pie_chart.get_plot())
