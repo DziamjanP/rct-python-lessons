@@ -6,6 +6,7 @@ url = 'http://localhost:8000'
 
 def get_tasks():
     r = requests.get(f'{url}/tasks')
+    if (r.status_code == 404): return []
     return r.json()['tasks']
 
 @st.dialog("Add new task")
@@ -83,11 +84,15 @@ if __name__ == '__main__':
     col_completed.divider()
     if col_completed.button("Add task", key="at1", use_container_width=True):
         add_task(True)
+    incomp = False
+    comp = False
     for task in tasks:
         if (task['completed']):
             c = col_completed.container(border=True)
+            comp = True
         else:
             c = col_incomplete.container(border=True)
+            incomp = True
         c.markdown(f'##### {task['title']}')
         c.write(task['description'])
         c.checkbox("Completed", value = task['completed'], disabled=True, key=f"completed_{task['id']}")
@@ -99,8 +104,10 @@ if __name__ == '__main__':
         if (cb.button("Remove", key=f"remove_{task['id']}", type="primary")):
             remove(task['id'], task['title'])
     
-    if col_incomplete.button("Add task", key="at2", use_container_width=True):
-        add_task(False)
-    if col_completed.button("Add task", key="at3", use_container_width=True):
-        add_task(True)
+    if incomp:
+        if col_incomplete.button("Add task", key="at2", use_container_width=True):
+            add_task(False)
+    if comp:
+        if col_completed.button("Add task", key="at3", use_container_width=True):
+            add_task(True)
         
